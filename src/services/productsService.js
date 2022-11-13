@@ -12,7 +12,7 @@ const findById = async (passengerId) => {
 
   const product = await productModel.findById(passengerId);
   if (product) return { type: null, message: product };
-  return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  return { type: 'PRODUCT_NOT_FOUND', message: { message: 'Product not found' } };
 };
 
 module.exports = {
