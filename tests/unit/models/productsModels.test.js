@@ -18,4 +18,10 @@ describe('Product model unit tests', function () {
     const result = await productModel.findById(1);
     expect(result).to.be.deep.equal(productModelMock.productsFromDb[0]);
   });
+
+  it('Registering a new product', async function () {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 6 }]);
+    const result = await productModel.insert(productModelMock.newProduct);
+    expect(result).to.equal(6);
+  });
 });

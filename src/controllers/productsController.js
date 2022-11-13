@@ -6,7 +6,7 @@ const listProducts = async (_req, res) => {
 
   if (type) return res.status(errorMap.mapError(type)).json(message);
 
-  res.status(200).json(message);
+  return res.status(200).json(message);
 };
 
 const getProducts = async (req, res) => {
@@ -15,10 +15,20 @@ const getProducts = async (req, res) => {
 
   if (type) return res.status(errorMap.mapError(type)).json(message);
 
-  res.status(200).json(message);
+  return res.status(200).json(message);
+};
+
+const createProducts = async (req, res) => {
+  const name = req.body;
+  const { type, message } = await productsService.createProducts(name);
+
+  if (type) return res.status(errorMap.mapError(type)).json({ message });
+
+  return res.status(201).json(message);
 };
 
 module.exports = {
   listProducts,
   getProducts,
+  createProducts,
 };
