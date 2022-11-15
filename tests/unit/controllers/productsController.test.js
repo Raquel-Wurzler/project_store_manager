@@ -11,24 +11,26 @@ const productsControllerMock = require('./mocks/productsController.mock');
 
 describe('ProductController unit test', function () {
   afterEach(sinon.restore);
-   it('Listing the products', async function () {
-    const res = {};
-    const req = {};
-    const productList = [productsControllerMock.newproductMock];
+  describe('Listing the products', function () {
+    it('Successfully listing the products', async function () {
+      const res = {};
+      const req = {};
+      const productList = [productsControllerMock.newproductMock];
 
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-    sinon
-      .stub(productsService, 'findAll')
-      .resolves({ type: null, message: productList });
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsService, 'findAll')
+        .resolves({ type: null, message: productList });
 
-    await productsController.listProducts(req, res);
+      await productsController.listProducts(req, res);
 
-    expect(res.status).to.have.been.calledWith(200);
-    expect(res.json).to.have.been.calledWith(productList);
-   });  
-  
-  it('Searching for a product', async function () {
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(productList);
+    });  
+  });
+  describe('Searching for a product by id', function () {
+    it('Successfully', async function () {
     const res = {};
     const req = {
       params: { id: 1 },
@@ -44,22 +46,58 @@ describe('ProductController unit test', function () {
 
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(productsControllerMock.newproductMock);
-  });
-  it('Successfully registering a new product', async function () {
+    });
+    it('With error', async function () {
     const res = {};
     const req = {
-      body: productsControllerMock.productMock,
+      params: { id: 0 },
     };
 
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon
-      .stub(productsService, 'createProducts')
-      .resolves({ type: null, message: productsControllerMock.newproductMock });
+      .stub(productsService, 'findById')
+      .resolves({ type: 'ID_NOT_FOUND', message: 'Product not found' });
 
-    await productsController.createProducts(req, res);
-    expect(res.status).to.have.been.calledWith(201);
-    expect(res.json).to.have.been.calledWith(productsControllerMock.newproductMock);
+    await productsController.getProducts(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith('Product not found');
+    });
+  });
+  describe('Registering a new product', function () {
+    it('Successfully', async function () {
+      const res = {};
+      const req = {
+        body: productsControllerMock.productMock,
+      };
+  
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsService, 'createProducts')
+        .resolves({ type: null, message: productsControllerMock.newproductMock });
+  
+      await productsController.createProducts(req, res);
+      expect(res.status).to.have.been.calledWith(201);
+      expect(res.json).to.have.been.calledWith(productsControllerMock.newproductMock);
+    });
+    it('With error', async function () {
+      const res = {};
+      const req = {
+        body: productsControllerMock.productMockError,
+      };
+  
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsService, 'createProducts')
+        .resolves({ type: 'INVALID_VALUE', message: '"name" length must be at least 5 characters long' });
+  
+      await productsController.createProducts(req, res);
+      expect(res.status).to.have.been.calledWith(422);
+      expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
+    });
+  });
   });
 
-});

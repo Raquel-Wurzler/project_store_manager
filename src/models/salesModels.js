@@ -2,24 +2,16 @@ const connection = require('../db/connection');
 
 const insertSales = async () => {
   const [{ insertId }] = await connection.execute(
-    'INSERT INTO StoreManager.sales (date) VALUES (NOW())',
+    'INSERT INTO StoreManager.sales (date) VALUES (now())', [],
   );
-
   return insertId;
 };
 
 const insertSalesProduct = async (sales, salesId) => {
-  const columns = Object.keys(sales)
-    .map((key) => `${key}`)
-    .join(', ');
-
-  const placeholders = Object.keys(sales)
-    .map((_key) => '?')
-    .join(', ');
-
   const [{ insertId }] = await connection.execute(
-    `INSERT INTO StoreManager.sales_products (${columns}, sale_id) VALUES (${placeholders}, ?)`,
-    [...Object.values(sales), salesId],
+    `INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
+    VALUES (?, ?, ?)`,
+    [salesId, sales.productId, sales.quantity],
   );
 
   return insertId;

@@ -11,7 +11,7 @@ describe('Sales model unit tests', function () {
     it('In the sales table', async function () {
       sinon.stub(connection, 'execute').resolves([{ insertId: 3 }]);
       const result = await salesModel.insertSales();
-      expect(result).to.equal(3);
+      expect(result).to.be.deep.equal(3);
     });
     it('In the sales_products table', async function () {
       sinon.stub(connection, 'execute').resolves([{ insertId: 3 }]);

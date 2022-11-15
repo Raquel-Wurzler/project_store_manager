@@ -17,10 +17,30 @@ const validateNewProducts = (name) => {
   return { type: null, message: '' };
 };
 
-const validateNewSale = async (sales) => {
-  const product = await productsModel.findById(sales.productId);
+const validateIfProductExists = async (productId) => {
+  const { error } = schema.idSchema.validate(productId);
+  if (error) {
+    return { type: 'ID_NOT_FOUND', message: 'Product not found' };
+  }
+  const product = await productsModel.findById(productId);
   if (!product) {
-    return { type: 'INVALID_ID', message: 'Product not found' };
+    return { type: 'ID_NOT_FOUND', message: 'Product not found' };
+  }
+  return { type: null, message: '' };
+};
+
+const validProductId = async (sale) => {
+  const ids = sale.map((s) => s.productId)
+    .map(async (p) => validateIfProductExists(p));
+  const promiseIds = await Promise.all(ids);
+  const noId = promiseIds.find((i) => i.type === 'ID_NOT_FOUND');
+  return noId;
+};
+
+const validateQuantity = (q) => {
+  const { error } = schema.quantitySchema.validate(q);
+  if (error) {
+    return { type: 'INVALID_VALUE', message: '"quantity" must be greater than or equal to 1' };
   }
   return { type: null, message: '' };
 };
@@ -28,5 +48,6 @@ const validateNewSale = async (sales) => {
 module.exports = {
   validateId,
   validateNewProducts,
-  validateNewSale,
+  validProductId,
+  validateQuantity,
 };

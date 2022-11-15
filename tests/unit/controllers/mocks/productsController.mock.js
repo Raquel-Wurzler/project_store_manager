@@ -4,7 +4,12 @@ const productMock = {
 
 const newproductMock = { id: 1, ...productMock };
 
+const productMockError = {
+  name: 'Tor',
+};
+
 module.exports = {
   productMock,
   newproductMock,
+  productMockError,
 }
