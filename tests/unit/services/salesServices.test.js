@@ -47,7 +47,7 @@ describe('Checking sale service', function () {
       expect(result.message).to.equal('"id" must be a number');
     });
     it('Returns an error if the sale does not exist', async function () {
-      sinon.stub(salesModel, 'findById').resolves(undefined);
+      sinon.stub(salesModel, 'findById').resolves([]);
       const result = await salesService.findById(1);
       expect(result.type).to.equal('SALE_NOT_FOUND');
       expect(result.message).to.deep.equal({ message: 'Sale not found' });

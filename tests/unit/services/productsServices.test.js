@@ -19,7 +19,6 @@ describe('Checking product service', function () {
       expect(result.type).to.equal('INVALID_VALUE');
       expect(result.message).to.equal('"id" must be a number');
     });
-
     it('Returns an error if the product does not exist', async function () {
       sinon.stub(productModel, 'findById').resolves(undefined);
       const result = await productService.findById(1);
@@ -27,12 +26,9 @@ describe('Checking product service', function () {
       expect(result.message).to.deep.equal({ message: 'Product not found' });
       expect(result.message instanceof Object).to.equal(true);
     });
-    
     it('Returns the product if existing ID', async function () {
       sinon.stub(productModel, 'findById').resolves(productServiceMock.allProducts[0]);
-      
       const result = await productService.findById(1);
-
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(productServiceMock.allProducts[0]);
     });

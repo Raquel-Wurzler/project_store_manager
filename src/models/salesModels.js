@@ -20,19 +20,23 @@ const insertSalesProduct = async (sales, salesId) => {
 
 const findAll = async () => {
   const [result] = await connection.execute(
-    'SELECT * FROM StoreManager.sales_products',
+    `SELECT saleP.sale_id, saleP.product_id, saleP.quantity, sale.date
+    FROM StoreManager.sales_products AS saleP
+    INNER JOIN StoreManager.sales AS sale
+    ON saleP.sale_id = sale.id
+    ORDER BY saleP.sale_id, saleP.product_id`,
   );
   return camelize(result);
 };
 
-const findById = async (salesId) => {
+const findById = async (saleId) => {
   const [sale] = await connection.execute(
     `SELECT saleP.product_id, saleP.quantity, sale.date
     FROM StoreManager.sales_products AS saleP
     INNER JOIN StoreManager.sales AS sale
     ON saleP.sale_id = sale.id
     WHERE saleP.sale_id = ?`,
-    [salesId],
+    [saleId],
   );
   return camelize(sale);
 };

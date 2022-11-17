@@ -7,5 +7,7 @@ const routerSales = express.Router();
 routerSales.post('/',
   saleValidate.validateSale,
   salesController.insertSales);
+routerSales.get('/:id', salesController.getSales);
+routerSales.get('/', salesController.listSales);
 
 module.exports = routerSales;
