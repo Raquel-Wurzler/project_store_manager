@@ -25,12 +25,12 @@ describe('Sales model unit tests', function () {
       const result = await salesModel.findAll();
       expect(result).to.be.deep.equal(salesModelMock.salesFromDb);
     });
+  });
   describe('Check if listing a sales by id', function () {
     it('Succesfuly', async function () {
     sinon.stub(connection, 'execute').resolves([salesModelMock.salesFromDbById]);
     const result = await salesModel.findById(1);
     expect(result).to.be.deep.equal(salesModelMock.salesFromDbById);
     });
-  });
   });
 });
