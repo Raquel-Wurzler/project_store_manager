@@ -37,7 +37,7 @@ const withWrongId = [
 const withWrongQuant = [
   {
     "productId": 1,
-    "quantity": 1
+    "quantity": "t"
   },
   {
     "productId": 2,

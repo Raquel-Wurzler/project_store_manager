@@ -99,5 +99,38 @@ describe('ProductController unit test', function () {
       expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
     });
   });
+  describe('Delete a product', function () {
+    it('Successfully', async function () {
+      const res = {};
+      const req = { params: { id: 1 }
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon
+        .stub(productsService, 'deleteProduct')
+        .resolves({ type: null, message: { id: 1 } });
+      await productsController.deleteProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+      expect(res.json).to.have.been.calledWith();
+    });
+    it('With error', async function () {
+      const res = {};
+      const req = { params: { id: 0 }
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon
+        .stub(productsService, 'deleteProduct')
+        .resolves({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
+      await productsController.deleteProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+    });
   });
+});
+
 
