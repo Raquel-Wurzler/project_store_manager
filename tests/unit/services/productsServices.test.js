@@ -52,15 +52,21 @@ describe('Checking product service', function () {
   describe('Update a product by Id', function () {
     it('Successfully', async function () {
       sinon.stub(productModel, 'updateProduct').resolves({ affectedRows: 1 });
-      const result = await productService.updateProduct({ productId: 2, name: 'Alfredo' });
+      const result = await productService.updateProduct(2, { name: 'Alfredo' });
       expect(result.type).to.equal(null);
-      expect(result.message).to.deep.equal({ productId: 2, name: 'Alfredo' });
+      expect(result.message).to.deep.equal({ id: 2, name: 'Alfredo' });
     });
-    it('With error', async function () {
+    it('With error by Id', async function () {
       sinon.stub(productModel, 'updateProduct').resolves({ affectedRows: 0 });
-      const result = await productService.updateProduct({ productId: 0, name: 'Alfredo' });
+      const result = await productService.updateProduct(0, { name: 'Alfredo' });
       expect(result.type).to.equal('PRODUCT_NOT_FOUND');
       expect(result.message).to.deep.equal('Product not found');
+    });
+    it('With error by name', async function () {
+      sinon.stub(productModel, 'updateProduct').resolves({ affectedRows: 0 });
+      const result = await productService.updateProduct(1, 'Alf');
+      expect(result.type).to.equal('INVALID_VALUE');
+      expect(result.message).to.deep.equal('"name" length must be at least 5 characters long');
     });
   });
   describe('Deleting a product by Id', function () {

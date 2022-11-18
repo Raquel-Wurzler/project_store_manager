@@ -8,9 +8,9 @@ const validateId = (id) => {
   return { type: null, message: '' };
 };
 
-const validateNewProducts = (name) => {
+const validateNameProducts = (product) => {
   const { error } = schema.addProductsSchema
-    .validate(name);
+    .validate(product);
   if (error) {
     return { type: 'INVALID_VALUE', message: '"name" length must be at least 5 characters long' };
   }
@@ -47,7 +47,7 @@ const validateQuantity = (q) => {
 
 module.exports = {
   validateId,
-  validateNewProducts,
+  validateNameProducts,
   validProductId,
   validateQuantity,
 };

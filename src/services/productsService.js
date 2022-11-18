@@ -16,7 +16,7 @@ const findById = async (passengerId) => {
 };
 
 const createProducts = async (name) => {
-  const error = validateInputs.validateNewProducts(name);
+  const error = validateInputs.validateNameProducts(name);
   if (error.type) return error;
 
   const newProductsId = await productModel.insert(name);
@@ -25,12 +25,14 @@ const createProducts = async (name) => {
   return { type: null, message: newProducts };
 };
 
-const updateProduct = async (productId, name) => {
-  const result = await productModel.updateProduct(productId, name);
+const updateProduct = async (id, product) => {
+  const error = validateInputs.validateNameProducts(product);
+  if (error.type) return error;
+  const result = await productModel.updateProduct(id, product.name);
   if (result.affectedRows === 0) {
     return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
   }
-  return { type: null, message: productId };
+  return { type: null, message: { id, name: product.name } };
 };
 
 const deleteProduct = async (productId) => {
