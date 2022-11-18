@@ -49,6 +49,20 @@ describe('Checking product service', function () {
       expect(result).to.deep.equal({ type: null, message: productServiceMock.allProducts[1] });
     });
   });
+  describe('Update a product by Id', function () {
+    it('Successfully', async function () {
+      sinon.stub(productModel, 'updateProduct').resolves({ affectedRows: 1 });
+      const result = await productService.updateProduct({ productId: 2, name: 'Alfredo' });
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal({ productId: 2, name: 'Alfredo' });
+    });
+    it('With error', async function () {
+      sinon.stub(productModel, 'updateProduct').resolves({ affectedRows: 0 });
+      const result = await productService.updateProduct({ productId: 0, name: 'Alfredo' });
+      expect(result.type).to.equal('PRODUCT_NOT_FOUND');
+      expect(result.message).to.deep.equal('Product not found');
+    });
+  });
   describe('Deleting a product by Id', function () {
     it('Successfully', async function () {
       sinon.stub(productModel, 'deleteProduct').resolves({ affectedRows: 1 });

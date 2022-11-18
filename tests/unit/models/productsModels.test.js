@@ -31,7 +31,6 @@ describe('Product model unit tests', function () {
     it('Update product successfully', async function () {
       sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
       const result = await productModel.updateProduct(1);
-      console.log(result);
       expect(result.affectedRows).to.equal(1);
     });
   });
