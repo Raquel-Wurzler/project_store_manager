@@ -27,6 +27,14 @@ describe('Product model unit tests', function () {
       expect(result).to.equal(6);
     });
   });
+  describe('Update product', function () {
+    it('Update product successfully', async function () {
+      sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+      const result = await productModel.updateProduct(1);
+      console.log(result);
+      expect(result.affectedRows).to.equal(1);
+    });
+  });
   describe('Delete product', function () {
     it('Delete product successfully', async function () {
       sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
