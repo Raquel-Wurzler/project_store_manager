@@ -33,4 +33,11 @@ describe('Sales model unit tests', function () {
     expect(result).to.be.deep.equal(salesModelMock.salesFromDbById);
     });
   });
+    describe('Delete sales', function () {
+    it('Delete sales successfully', async function () {
+      sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+      const result = await salesModel.deleteSales(1);
+      expect(result.affectedRows).to.equal(1);
+    });
+  });
 });

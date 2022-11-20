@@ -45,7 +45,8 @@ const updateProduct = async (id, product) => {
 
 const deleteProduct = async (productId) => {
   const [result] = await connection.execute(
-    'DELETE FROM StoreManager.products WHERE id = ?',
+    `DELETE FROM StoreManager.products
+    WHERE id = ?`,
     [productId],
   );
   return result;

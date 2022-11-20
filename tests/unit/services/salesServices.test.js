@@ -54,4 +54,18 @@ describe('Checking sale service', function () {
       expect(result.message instanceof Object).to.equal(true);
     });
   });
+    describe('Deleting a sales by Id', function () {
+    it('Successfully', async function () {
+      sinon.stub(salesModel, 'deleteSales').resolves({ affectedRows: 1 });
+      const result = await salesService.deleteSales(2);
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal({ id: 2 });
+    });
+    it('With error', async function () {
+      sinon.stub(salesModel, 'deleteSales').resolves({ affectedRows: 0 });
+      const result = await salesService.deleteSales(0);
+      expect(result.type).to.equal('SALE_NOT_FOUND');
+      expect(result.message).to.deep.equal('Sale not found');
+    });
+  });
 });
