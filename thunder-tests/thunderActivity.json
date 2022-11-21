@@ -230,12 +230,12 @@
     "method": "PUT",
     "sortNum": 0,
     "created": "2022-11-21T17:19:03.898Z",
-    "modified": "2022-11-21T17:42:23.888Z",
+    "modified": "2022-11-21T18:07:26.719Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 12\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 13\n  }\n]",
+      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 11\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 12\n  }\n]",
       "form": []
     },
     "tests": []

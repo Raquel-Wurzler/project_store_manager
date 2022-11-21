@@ -49,13 +49,13 @@ const updateSales = async (saleId, salesArray) => {
 
   const validProductId = await validateInputs.validProductId(salesArray);
   if (validProductId) return validProductId;
-  
+
   const validSaleId = await findById(saleId);
   if (validSaleId.type === 'SALE_NOT_FOUND') {
     return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
   }
   await Promise.all(salesArray.map((sale) => salesModel
-    .updateSales(saleId, sale.productId, sale.quantity)));
+    .updateSales(sale.productId, saleId, sale.quantity)));
   return { type: null, message: { saleId, itemsUpdated: salesArray } };
 };
 
