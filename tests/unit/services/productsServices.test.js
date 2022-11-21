@@ -83,4 +83,19 @@ describe('Checking product service', function () {
       expect(result.message).to.deep.equal('Product not found');
     });
   });
+  describe('Search for a product by "query"', function () {
+    it('Without "query"', async function () {
+      sinon.stub(productModel, 'searchProducts').resolves([]);
+      sinon.stub(productModel, 'findAll').resolves(productServiceMock.allProducts);
+      const result = await productService.searchProducts();
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(productServiceMock.allProducts);
+    });
+    it('With "query"', async function () {
+      sinon.stub(productModel, 'searchProducts').resolves(productServiceMock.searchQuery);
+      const result = await productService.searchProducts('Martelo');
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(productServiceMock.searchQuery);
+    });
+  });
 });

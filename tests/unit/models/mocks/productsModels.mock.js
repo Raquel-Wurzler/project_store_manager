@@ -14,10 +14,18 @@ const productsFromDb = [
 ];
 
 const newProduct = {
-    "name": "Máscara do Homem de Ferro"
-  };
+  "name": "Máscara do Homem de Ferro"
+};
+  
+const searchProducts = [
+  {
+    "id": 1,
+    "name": "Martelo de Thor"
+  }
+];
 
 module.exports = {
   productsFromDb,
   newProduct,
+  searchProducts,
 }

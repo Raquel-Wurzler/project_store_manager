@@ -161,6 +161,36 @@ describe('ProductController unit test', function () {
       expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
     });
   });
+  describe('Searching for a product by "query"', function () {
+    it('With "query"', async function () {
+    const res = {};
+    const req = { query: { query: { q: 'martelo' } } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(productsService, 'searchProducts')
+      .resolves({ type: null, message: productsControllerMock.searchQuery });
+
+    await productsController.searchProducts(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(productsControllerMock.searchQuery);
+    });
+    it('Without "query"', async function () {
+    const res = {};
+    const req = { query: { query: { q: '' } } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(productsService, 'searchProducts')
+      .resolves({ type: null, message: productsControllerMock.allProducts });
+
+    await productsController.searchProducts(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(productsControllerMock.allProducts);
+    });
+  });
 });
-
-

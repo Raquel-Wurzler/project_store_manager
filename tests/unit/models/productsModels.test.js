@@ -41,4 +41,11 @@ describe('Product model unit tests', function () {
       expect(result.affectedRows).to.equal(1);
     });
   });
+  describe('Search product', function () {
+    it('Successfully', async function () {
+      sinon.stub(connection, 'execute').resolves(productModelMock.searchProducts);
+      const result = await productModel.searchProducts('Martelo');
+      expect(result).to.deep.equal(productModelMock.searchProducts[0]);
+    });
+  });
 });
