@@ -54,7 +54,7 @@ describe('Checking sale service', function () {
       expect(result.message instanceof Object).to.equal(true);
     });
   });
-    describe('Deleting a sales by Id', function () {
+  describe('Deleting a sales by Id', function () {
     it('Successfully', async function () {
       sinon.stub(salesModel, 'deleteSales').resolves({ affectedRows: 1 });
       const result = await salesService.deleteSales(2);
@@ -66,6 +66,32 @@ describe('Checking sale service', function () {
       const result = await salesService.deleteSales(0);
       expect(result.type).to.equal('SALE_NOT_FOUND');
       expect(result.message).to.deep.equal('Sale not found');
+    });
+  });
+  describe('Update a sale by Id', function () {
+    it('Successfully', async function () {
+      sinon.stub(salesModel, 'updateSales').resolves({ affectedRows: 1 });
+      const result = await salesService.updateSales(2, salesServiceMock.updateSale);
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal({ saleId: 2, itemsUpdated: salesServiceMock.updateSale });
+    });
+    it('With error by saleId', async function () {
+      sinon.stub(salesService, 'findById').resolves({ affectedRows: 0 });
+      const result = await salesService.updateSales(1000, salesServiceMock.updateSale);
+      expect(result.type).to.equal('SALE_NOT_FOUND');
+      expect(result.message).to.deep.equal('Sale not found');
+    });
+    it('With error by quantity', async function () {
+      sinon.stub(salesModel, 'updateSales').resolves({ affectedRows: 0 });
+      const result = await salesService.updateSales(1, salesServiceMock.withWrongQuant);
+      expect(result.type).to.equal('INVALID_VALUE');
+      expect(result.message).to.deep.equal('"quantity" must be greater than or equal to 1');
+    });
+    it('With error by productId', async function () {
+      sinon.stub(salesModel, 'updateSales').resolves({ affectedRows: 0 });
+      const result = await salesService.updateSales(1, salesServiceMock.withWrongId);
+      expect(result.type).to.equal('ID_NOT_FOUND');
+      expect(result.message).to.deep.equal('Product not found');
     });
   });
 });

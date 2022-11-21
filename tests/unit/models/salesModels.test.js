@@ -40,4 +40,11 @@ describe('Sales model unit tests', function () {
       expect(result.affectedRows).to.equal(1);
     });
   });
+  describe('Update sales', function () {
+    it('Update sales successfully', async function () {
+      sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+      const result = await salesModel.updateSales(1);
+      expect(result.affectedRows).to.equal(1);
+    });
+  });
 });
