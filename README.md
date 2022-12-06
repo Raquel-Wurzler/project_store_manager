@@ -4,7 +4,7 @@ Este repositório contém o projeto Store Manager desenvolvido por [Raquel G. C 
 
 _"A Trybe é uma escola do futuro para qualquer pessoa que queira melhorar de vida e construir uma carreira de sucesso em tecnologia, onde a pessoa paga quando conseguir um bom trabalho."_
 
-#### Projeto de conclusão da seção 6, no módulo de Back-end
+#### Projeto de conclusão da seção 5, no módulo de Back-end
 
 ### Principal objetivo:
 * Criar uma API utilizando a Arquitetura de Software MSC (model-service-controller).
