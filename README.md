@@ -22,7 +22,6 @@ A API é um sistema de gerenciamento de vendas no formato dropshipping em que se
 * Testes unitários usando Mocha, Sinon, Chai;
 
 ##### Arquivos disponibilizados pela Trybe:
-* thunder-tests;
 * .editorconfig;
 * .eslintignore;
 * .eslintrc.json;
@@ -35,3 +34,4 @@ A API é um sistema de gerenciamento de vendas no formato dropshipping em que se
 * package.json;
 * seed.sql;
 * trybe-filter-repo.sh;
+* a pasta *thunder-tests*;
