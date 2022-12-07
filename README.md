@@ -35,3 +35,8 @@ A API é um sistema de gerenciamento de vendas no formato dropshipping em que se
 * seed.sql;
 * trybe-filter-repo.sh;
 * a pasta *thunder-tests*;
+
+## Stack utilizada
+
+**Back-end:** Node, Express, JavaScript, MySql, MSC, Mocha, Sinon, Chai
+
