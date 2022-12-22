@@ -60,7 +60,7 @@ ou
 npm start
 
 # Configure o arquivo .env com suas informações
-conforme .env-example
+conforme o arquivo .env-example
 
 # Rode a aplicação
 usando extensão Live Server no vs-code na porta que você especificar no arquivo .env
