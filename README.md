@@ -40,3 +40,30 @@ A API é um sistema de gerenciamento de vendas no formato dropshipping em que se
 
 **Back-end:** Node, Express, JavaScript, MySql, MSC, Mocha, Sinon, Chai
 
+## Instalação e uso
+
+```bash
+# Abra um terminal e copie este repositório com o comando
+git clone git@github.com:Raquel-Wurzler/project_store_manager.git
+
+# Entre na pasta do projeto 
+cd project_store_manager
+
+# Instale as dependências
+yarn install
+ou 
+npm install
+
+# Rode o servidor
+npm run debug
+ou
+npm start
+
+# Configure o arquivo .env com suas informações
+conforme .env-example
+
+# Rode a aplicação
+usando extensão Live Server no vs-code na porta que você especificar no arquivo .env
+
+```
+
